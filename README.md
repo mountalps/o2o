@@ -4,6 +4,9 @@ This platform allows merchants to run their business online. They can set up a s
 ## Website
 coming soon
 
+## Tests
+
+
 ## Built with
 - [SUI Mobile](http://m.sui.taobao.org) - UI components library
 - [Spring](https://spring.io) - The web frameword used
