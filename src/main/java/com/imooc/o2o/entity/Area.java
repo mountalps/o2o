@@ -16,8 +16,8 @@ public class Area {
         return areaId;
     }
 
-    public void setAreaID(Integer areaID) {
-        this.areaId = areaID;
+    public void setAreaId(Integer areaId) {
+        this.areaId = areaId;
     }
 
     public String getAreaName() {

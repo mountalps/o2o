@@ -9,11 +9,13 @@ import com.imooc.o2o.service.ShopService;
 import com.imooc.o2o.util.ImageUtil;
 import com.imooc.o2o.util.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.Date;
 
+@Service
 public class ShopServiceImpl implements ShopService {
 
     @Autowired
@@ -21,7 +23,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     @Transactional
-    public ShopExecution addShop(Shop shop, File shopImg) {
+    public ShopExecution addShop(Shop shop, File shopImg) throws ShopOperationException {
 
         //check whether shop is null
         if (shop == null){
@@ -61,12 +63,11 @@ public class ShopServiceImpl implements ShopService {
         return new ShopExecution(ShopStateEnum.CHECK, shop);
     }
 
-    private void addShopImg(Shop shop, File shopImg) {
+    private void addShopImg(Shop shop, File shopImg) throws ShopOperationException{
         //get the shop's directory
         String dest = PathUtil.getShopImagePath(shop.getShopId());
         String shopImgAddr = ImageUtil.generateThumbnail(shopImg, dest);
         shop.setShopImg(shopImgAddr);
-
     }
 
 }

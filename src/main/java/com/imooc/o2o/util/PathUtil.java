@@ -11,14 +11,14 @@ public class PathUtil {
             basePath = "D:/projectdve/image/";
         }
         else {
-            basePath = "/home/xiangze/image/";
+            basePath = "/Users/wesley/Pictures/o2o/image/";
         }
         basePath = basePath.replace("/", separator);
         return basePath;
     }
 
     public static String getShopImagePath(long shopId){
-        String imagePath = "/upload/item/shop/" + shopId + "/";
+        String imagePath = "upload/item/shop/" + shopId + "/";
         return imagePath.replace("/", separator);
     }
 }

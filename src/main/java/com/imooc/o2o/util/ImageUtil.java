@@ -47,7 +47,7 @@ public class ImageUtil {
      * @param targetAddr
      * @return
      */
-    public static String generateThumbnail(File thumbnail, String targetAddr){
+    public static String generateThumbnail(File thumbnail, String targetAddr) throws RuntimeException{
         String realFileName = getRandomFileName();
         String extension = getFileExtension(thumbnail);
         makeDirPath(targetAddr);
@@ -65,6 +65,7 @@ public class ImageUtil {
         }catch (IOException e){
             logger.error(e.toString());
             e.printStackTrace();
+            throw new RuntimeException("add water mark fails");
         }
 
         return relativeAddr;
