@@ -5,6 +5,7 @@ import com.imooc.o2o.dto.ShopExecution;
 import com.imooc.o2o.entity.PersonInfo;
 import com.imooc.o2o.entity.Shop;
 import com.imooc.o2o.enums.ShopStateEnum;
+import com.imooc.o2o.exceptions.ShopOperationException;
 import com.imooc.o2o.service.ShopService;
 import com.imooc.o2o.util.HttpServletRequestUtil;
 import com.imooc.o2o.util.ImageUtil;
@@ -19,7 +20,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.ws.RequestWrapper;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,32 +66,28 @@ public class ShopManagementController {
 
         //2. register shop
         if (shop != null && shopImg != null){
+            //use session later
             PersonInfo owner = new PersonInfo();
             owner.setUserId(1L);
             shop.setOwner(owner);
-            File shopImgFile = new File(PathUtil.getImgBasePath() + ImageUtil.getRandomFileName());
+            ShopExecution se = null;
             try {
-                shopImgFile.createNewFile();
+                se = shopService.addShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+                if (se.getState() == ShopStateEnum.CHECK.getState()){
+                    modelMap.put("success", true);
+                }
+                else {
+                    modelMap.put("success", false);
+                    modelMap.put("errMsg", se.getStateInfo());
+                }
             } catch (IOException e) {
                 modelMap.put("success", false);
-                modelMap.put("errMsg", e.getMessage());
-                return modelMap;
-            }
-            try {
-                inputStreamToFile(shopImg.getInputStream(), shopImgFile);
-            } catch (IOException e) {
-                modelMap.put("success", false);
-                modelMap.put("errMsg", e.getMessage());
-                return modelMap;
-            }
-            ShopExecution se = shopService.addShop(shop, shopImgFile);
-            if (se.getState() == ShopStateEnum.CHECK.getState()){
-                modelMap.put("success", true);
-            }
-            else {
+                modelMap.put("errMsg", se.getStateInfo());
+            } catch (ShopOperationException e){
                 modelMap.put("success", false);
                 modelMap.put("errMsg", se.getStateInfo());
             }
+
             //3. return result(several returns)
             return modelMap;
         }else {
@@ -102,30 +98,30 @@ public class ShopManagementController {
 
 
     }
-    private static void inputStreamToFile(InputStream ins, File file){
-        FileOutputStream os = null;
-        try {
-            os = new FileOutputStream(file);
-            int bytesRead = 0;
-            byte[] buffer = new byte[1024];
-            while ((bytesRead = ins.read(buffer)) != -1){
-                os.write(buffer, 0, bytesRead);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("calling inputStreamToFile causes exception: "+ e.getMessage());
-        }finally {
-            try{
-                if (os != null){
-                    os.close();
-                }
-
-                if (ins != null){
-                    ins.close();
-                }
-
-            }catch (IOException e){
-                throw new RuntimeException("inputStreamToFile close io causes exception: "+ e.getMessage());
-            }
-        }
-    }
+//    private static void inputStreamToFile(InputStream ins, File file){
+//        FileOutputStream os = null;
+//        try {
+//            os = new FileOutputStream(file);
+//            int bytesRead = 0;
+//            byte[] buffer = new byte[1024];
+//            while ((bytesRead = ins.read(buffer)) != -1){
+//                os.write(buffer, 0, bytesRead);
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException("calling inputStreamToFile causes exception: "+ e.getMessage());
+//        }finally {
+//            try{
+//                if (os != null){
+//                    os.close();
+//                }
+//
+//                if (ins != null){
+//                    ins.close();
+//                }
+//
+//            }catch (IOException e){
+//                throw new RuntimeException("inputStreamToFile close io causes exception: "+ e.getMessage());
+//            }
+//        }
+//    }
 }

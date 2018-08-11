@@ -9,6 +9,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -43,13 +44,13 @@ public class ImageUtil {
 
     /**
      * deal with thumbnails and return relative address of created picture
-     * @param thumbnail
+     * @param thumbnailInputStream
      * @param targetAddr
      * @return
      */
-    public static String generateThumbnail(File thumbnail, String targetAddr) throws RuntimeException{
+    public static String generateThumbnail(InputStream thumbnailInputStream,String fileName, String targetAddr) throws RuntimeException{
         String realFileName = getRandomFileName();
-        String extension = getFileExtension(thumbnail);
+        String extension = getFileExtension(fileName);
         makeDirPath(targetAddr);
         String relativeAddr = targetAddr + realFileName + extension;
         logger.debug("current relativeAddr is: "+relativeAddr);
@@ -57,7 +58,7 @@ public class ImageUtil {
         logger.debug("current complete addr is: "+ PathUtil.getImgBasePath() + relativeAddr);
         try {
             Thumbnails
-                    .of(thumbnail)
+                    .of(thumbnailInputStream)
                     .size(200, 200)
                     .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/watermark.jpg")),0.25f)
                     .outputQuality(0.8f)
@@ -87,12 +88,11 @@ public class ImageUtil {
 
     /**
      * get the extension name of input file stream
-     * @param cFile
+     * @param fileName
      * @return
      */
-    private static String getFileExtension(File cFile) {
-        String originalFileName = cFile.getName();
-        return originalFileName.substring(originalFileName.lastIndexOf("."));
+    private static String getFileExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf("."));
     }
 
     /**
