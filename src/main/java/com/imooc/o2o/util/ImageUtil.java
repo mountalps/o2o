@@ -100,7 +100,7 @@ public class ImageUtil {
      * current year month day hour minute second + five-digit random number
      * @return
      */
-    private static String getRandomFileName() {
+    public static String getRandomFileName() {
         //get a five-digit random number
         int rannum = r.nextInt(89999) + 10000;
         String nowTimeStr = sDateFormat.format(new Date());
