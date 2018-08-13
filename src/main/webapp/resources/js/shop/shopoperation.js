@@ -10,7 +10,6 @@ $(function () {
     alert(initUrl);
     getShopInitInfo();
 
-
     function getShopInitInfo() {
         //get shopcategory and area into shopoperation.html
         $.getJSON(initUrl, function(data){
