@@ -5,8 +5,8 @@
  */
 
 $(function () {
-    var initUrl = '/o2o/shopadmin/getshopinitinfo';
-    var registerShopUrl = '/o2o/shopadmin/registershop';
+    var initUrl = '/shopadmin/getshopinitinfo';
+    var registerShopUrl = '/shopadmin/registershop';
     alert(initUrl);
     getShopInitInfo();
 
@@ -20,10 +20,11 @@ $(function () {
                     tempHtml += '<option data-id = "' + item.shopCategoryId + '">'
                     + item.shopCategoryName + '</option>';
                 });
+
                 data.areaList.map(function(item, index){
 
-                    tempAreaHtml = '<option data-id = "' + item.areaId + '">'
-                    + item.areaName + '</option>>';
+                    tempAreaHtml += '<option data-id = "' + item.areaId + '">'
+                    + item.areaName + '</option>';
                 });
                 $('#shop-category').html(tempHtml);
                 $('#area').html(tempAreaHtml);

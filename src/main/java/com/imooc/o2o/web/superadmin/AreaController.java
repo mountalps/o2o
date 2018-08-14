@@ -22,7 +22,7 @@ public class AreaController {
     @Autowired
     private AreaService areaService;
 
-    @RequestMapping(value = "/listarea", method = RequestMethod.GET)
+    @RequestMapping(value = "/listarea", method = {RequestMethod.GET})
     @ResponseBody
     private Map<String, Object> listArea(){
 
