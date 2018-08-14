@@ -12,7 +12,7 @@ public class Area {
     private Date createTime;
     private Date lastEditTime;
 
-    public Integer getAreaID() {
+    public Integer getAreaId() {
         return areaId;
     }
 

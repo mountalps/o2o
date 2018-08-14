@@ -41,7 +41,7 @@ public class ShopManagementController {
     @Autowired
     private AreaService areaService;
 
-    @RequestMapping(value = "getshopinitinfo", method = {RequestMethod.GET})
+    @RequestMapping(value = "/getshopinitinfo", method = {RequestMethod.GET})
     @ResponseBody//transfer return parameter to JSON
     private Map<String, Object> getShopInitInfo(){
         Map<String, Object> modelMap = new HashMap<>();
@@ -72,13 +72,14 @@ public class ShopManagementController {
 
         if (!CodeUtil.checkVerifyCode(request)){
             modelMap.put("success", false);
-            modelMap.put("errMsg", "wrong verify code!!!");
+            modelMap.put("errMsg", "wrong verify code!");
             return modelMap;
         }
 
-        //1. receive and transfer paramter, including shop information and picture information
+        //1. receive and transfer parameter, including shop information and picture information
         //1.1 this is to deal with shop information from http request
         String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
+        //deserialize JSON string into Java objects
         ObjectMapper mapper = new ObjectMapper();
         Shop shop = null;
         try {

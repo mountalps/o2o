@@ -37,6 +37,7 @@ public class ShopServiceImpl implements ShopService {
             shop.setEnableStatus(0);
             shop.setCreateTime(new Date());
             shop.setLastEditTime(new Date());
+            shop.setAdvice("appending - 审核中");
 
             //insert this shop
             int effectedNum = shopDao.insertShop(shop);

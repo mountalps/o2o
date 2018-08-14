@@ -1,6 +1,8 @@
 package com.imooc.o2o.util;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class HttpServletRequestUtil {
 
@@ -49,5 +51,14 @@ public class HttpServletRequestUtil {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    static void charReader(HttpServletRequest request) throws IOException {
+        BufferedReader br = request.getReader();
+        String str, wholeStr = "";
+        while((str = br.readLine()) != null){
+            wholeStr += str;
+        }
+        System.out.println(wholeStr);
     }
 }
