@@ -7,7 +7,7 @@
 $(function () {
     var initUrl = '/shopadmin/getshopinitinfo';
     var registerShopUrl = '/shopadmin/registershop';
-    alert(initUrl);
+    // alert(initUrl);
     getShopInitInfo();
 
     function getShopInitInfo() {
@@ -51,6 +51,12 @@ $(function () {
             var formData = new FormData();
             formData.append('shopImg', shopImg);
             formData.append('shopStr', JSON.stringify(shop));
+            var veriyfyCodeActual = $('#j_captcha').val();
+            if (!veriyfyCodeActual){
+                $.toast('please input verify code!');
+                return;
+            }
+            formData.append('verifyCodeActual', veriyfyCodeActual);
             $.ajax({
                url: registerShopUrl,
                type: 'POST',
@@ -65,6 +71,7 @@ $(function () {
                    else {
                        $.toast('submit failed' + data.errMsg);
                    }
+                   $('#captcha_img').click();
                }
             });
         });
