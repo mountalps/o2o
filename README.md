@@ -6,6 +6,8 @@ This platform allows merchants to run their business online. They can set up a s
 - [Spring](https://spring.io) - The web frameword used
 - [Maven](https://maven.apache.org) - Dependency Management
 - [MyBatis](http://www.mybatis.org/mybatis-3/) - SQL mapper framework
+- [Thumbnailator](https://github.com/coobird/thumbnailator) - A thumbnail generation library for Java
+- [Kaptcha](https://code.google.com/archive/p/kaptcha/) - simple 6 digit captcha image middleware for express, modified from captcha middleware
 
 ## Author
 - Wei Wang - [Resume](https://www.linkedin.com/in/weiwang0704/) 
