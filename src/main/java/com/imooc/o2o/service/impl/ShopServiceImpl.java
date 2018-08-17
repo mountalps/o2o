@@ -28,7 +28,7 @@ public class ShopServiceImpl implements ShopService {
     public ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException {
 
         //check whether shop is null
-        if (shop == null){
+        if (shop == null) {
             return new ShopExecution(ShopStateEnum.NULL_SHOP);
         }
 
@@ -41,36 +41,71 @@ public class ShopServiceImpl implements ShopService {
 
             //insert this shop
             int effectedNum = shopDao.insertShop(shop);
-            if (effectedNum <= 0){
+            if (effectedNum <= 0) {
                 throw new ShopOperationException("creating shop fails");
-            }else {
-                if (shopImgInputStream != null){
+            } else {
+                if (shopImgInputStream != null) {
                     //save this image
                     try {
                         addShopImg(shop, shopImgInputStream, fileName);
-                    }catch (Exception e){
-                        throw new ShopOperationException("addShopImg error: "+e.getMessage());
+                    } catch (Exception e) {
+                        throw new ShopOperationException("addShopImg error: " + e.getMessage());
                     }
 
                     //update picture address of the shop
                     effectedNum = shopDao.updateShop(shop);
-                    if (effectedNum <= 0){
+                    if (effectedNum <= 0) {
                         throw new ShopOperationException("updating picture address fails");
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new ShopOperationException("addShop error" + e.getMessage());
         }
 
         return new ShopExecution(ShopStateEnum.CHECK, shop);
     }
 
-    private void addShopImg(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException{
+    private void addShopImg(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException {
         //get the shop's directory
         String dest = PathUtil.getShopImagePath(shop.getShopId());
         String shopImgAddr = ImageUtil.generateThumbnail(shopImgInputStream, fileName, dest);
         shop.setShopImg(shopImgAddr);
     }
 
+    @Override
+    public Shop getByShopId(long shopId) {
+        return shopDao.queryByShopId(shopId);
+    }
+
+    @Override
+    public ShopExecution modifyShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException {
+        if (shop == null || shop.getShopId() == null) {
+            return new ShopExecution(ShopStateEnum.NULL_SHOP);
+        } else {
+            try {
+                // 1st Step:
+                // whether it is needed to deal with pictures
+                if (shopImgInputStream != null && fileName != null && !"".equals(fileName)) {
+                    Shop tempShop = shopDao.queryByShopId(shop.getShopId());
+                    if (tempShop.getShopImg() != null) {
+                        ImageUtil.deleteFileOrPath(tempShop.getShopImg());
+                    }
+                    addShopImg(shop, shopImgInputStream, fileName);
+                }
+                // 2nd Step:
+                // update shop's information
+                shop.setLastEditTime(new Date());
+                int effectedNum = shopDao.updateShop(shop);
+                if (effectedNum <= 0) {
+                    return new ShopExecution(ShopStateEnum.INNER_ERROR);
+                } else {
+                    shop = shopDao.queryByShopId(shop.getShopId());
+                    return new ShopExecution(ShopStateEnum.SUCCESS, shop);
+                }
+            } catch (Exception e) {
+                throw new ShopOperationException("modifyShop error: " + e.getMessage());
+            }
+        }
+    }
 }

@@ -117,4 +117,23 @@ public class ImageUtil {
                 .outputQuality(0.8f)
                 .toFile("/Users/wesley/Pictures/flowernew.jpg");
     }
+
+    /**
+     * if storePath is a file's path, then delete this file
+     * if storePath is a directory, then delete this directory
+     * @param storePath
+     */
+    public static void deleteFileOrPath(String storePath){
+
+        File fileOrPath = new File(PathUtil.getImgBasePath() + storePath);
+        if (fileOrPath.exists()){
+            if (fileOrPath.isDirectory()){
+                File files[] = fileOrPath.listFiles();
+                for (int i = 0; i < files.length; i ++){
+                    files[i].delete();
+                }
+            }
+            fileOrPath.delete();
+        }
+    }
 }
