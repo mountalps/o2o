@@ -3,9 +3,11 @@ This platform allows merchants to run their business online. They can set up a s
 
 ## Screenshots
 shop register page☟
+
 <img src="https://github.com/mountalps/illustration/blob/master/shopoperation.jpg" width="300">
 
 shop list page☟
+
 <img src="https://github.com/mountalps/illustration/blob/master/shoplist.jpg" width="300">
 
 
