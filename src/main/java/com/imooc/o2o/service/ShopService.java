@@ -7,6 +7,16 @@ import java.io.InputStream;
 
 public interface ShopService {
 
+
+    /**
+     *
+     * @param shopCondition
+     * @param pageIndex
+     * @param pageSize
+     * @return data list based on shopCondition
+     */
+    ShopExecution getShopList(Shop shopCondition, int pageIndex, int pageSize);
+
     /**
      * get shop's information by shop's id
      * @param shopId
