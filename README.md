@@ -1,6 +1,8 @@
 # Mobile O2O E-commerce Platform
 This platform allows merchants to run their business online. They can set up a shop, manage products and membership. Customers could register as a new member, search shops and products.
 
+![](https://github.com/mountalps/illustration/blob/master/shopoperation.jpg)
+
 ## Built with
 - [SUI Mobile](http://m.sui.taobao.org) - UI components library
 - [Spring](https://spring.io) - The web frameword used
