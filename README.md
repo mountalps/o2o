@@ -2,13 +2,9 @@
 This platform allows merchants to run their business online. They can set up a shop, manage products and membership. Customers could register as a new member, search shops and products.
 
 ## Screenshots
-- shop register/modify page☟
 
-<img src="https://github.com/mountalps/illustration/blob/master/shopoperation.jpg" width="300">
+<img src="https://github.com/mountalps/illustration/blob/master/shop-1.jpg" width="300">
 
-- shop list page☟
-
-<img src="https://github.com/mountalps/illustration/blob/master/shoplist.jpg" width="300">
 
 
 
