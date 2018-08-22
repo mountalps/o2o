@@ -42,7 +42,7 @@ $(function() {
 
     function goShop(status, id) {
         if (status == 1) {
-            return '<a href="/shopadmin/shopoperation?shopId=' + id
+            return '<a href="/shopadmin/shopmanagement?shopId=' + id
                 + '">Enter</a>';
         } else {
             return '';
