@@ -35,9 +35,9 @@ $(function() {
         .click(
             function() {
                 var tempHtml = '<div class="row row-product-category temp">'
-                    + '<div class="col-33"><input class="category-input category" type="text" placeholder="分类名"></div>'
-                    + '<div class="col-33"><input class="category-input priority" type="number" placeholder="优先级"></div>'
-                    + '<div class="col-33"><a href="#" class="button delete">删除</a></div>'
+                    + '<div class="col-33"><input class="category-input category" type="text" placeholder="category"></div>'
+                    + '<div class="col-33"><input class="category-input priority" type="number" placeholder="priority"></div>'
+                    + '<div class="col-33"><a href="#" class="button delete">delete</a></div>'
                     + '</div>';
                 $('.category-wrap').append(tempHtml);
             });
@@ -59,10 +59,10 @@ $(function() {
             contentType : 'application/json',
             success : function(data) {
                 if (data.success) {
-                    $.toast('submission succeeds');
+                    $.toast('submission succeeds！');
                     getList();
                 } else {
-                    $.toast('submission fails');
+                    $.toast('submission fails！');
                 }
             }
         });

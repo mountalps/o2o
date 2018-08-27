@@ -12,4 +12,11 @@ public interface ProductCategoryDao {
      * @return
      */
     List<ProductCategory> queryProductCategoryList(long shopId);
+
+    /**
+     * insert multiple product categories
+     * @param productCategories
+     * @return
+     */
+    int batchInsertProductCategory(List<ProductCategory> productCategories);
 }
