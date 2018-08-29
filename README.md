@@ -17,5 +17,5 @@ This platform allows merchants to run their business online. They can set up a s
 
 
 ## Author
-- Wei Wang - [Resume](https://www.linkedin.com/in/weiwang0704/) 
+- Wei Wang - [LinkedIn](https://www.linkedin.com/in/weiwang0704/) 
 
