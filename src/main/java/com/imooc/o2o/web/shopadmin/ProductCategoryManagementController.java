@@ -33,6 +33,7 @@ public class ProductCategoryManagementController {
         Shop currentShop = (Shop)request.getSession().getAttribute("currentShop");
         currentShop = new Shop();
         currentShop.setShopId(1L);
+        request.getSession().setAttribute("currentShop", currentShop);
         List<ProductCategory> list = null;
 
         if (currentShop != null && currentShop.getShopId() > 0) {
