@@ -18,7 +18,9 @@ public class Product {
     private Integer priority;
     private Date createTime;
     private Date lastEditTime;
-    // 0.do not display this product 1.display it in the front end
+
+    // 0 means do not display this product
+    // 1 means display it in the frontend
     private Integer enableStatus;
 
     // product image(detailed image)

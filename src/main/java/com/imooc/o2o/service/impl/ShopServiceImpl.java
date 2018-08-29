@@ -1,6 +1,7 @@
 package com.imooc.o2o.service.impl;
 
 import com.imooc.o2o.dao.ShopDao;
+import com.imooc.o2o.dto.ImageHolder;
 import com.imooc.o2o.dto.ShopExecution;
 import com.imooc.o2o.entity.Shop;
 import com.imooc.o2o.enums.ShopStateEnum;
@@ -27,7 +28,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     @Transactional
-    public ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException {
+    public ShopExecution addShop(Shop shop, ImageHolder thumbernail) throws ShopOperationException {
 
         //check whether shop is null
         if (shop == null) {
@@ -46,10 +47,10 @@ public class ShopServiceImpl implements ShopService {
             if (effectedNum <= 0) {
                 throw new ShopOperationException("creating shop fails");
             } else {
-                if (shopImgInputStream != null) {
+                if (thumbernail.getImage() != null) {
                     //save this image
                     try {
-                        addShopImg(shop, shopImgInputStream, fileName);
+                        addShopImg(shop, thumbernail);
                     } catch (Exception e) {
                         throw new ShopOperationException("addShopImg error: " + e.getMessage());
                     }
@@ -68,10 +69,10 @@ public class ShopServiceImpl implements ShopService {
         return new ShopExecution(ShopStateEnum.CHECK, shop);
     }
 
-    private void addShopImg(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException {
+    private void addShopImg(Shop shop, ImageHolder thumbernail) throws ShopOperationException {
         //get the shop's directory
         String dest = PathUtil.getShopImagePath(shop.getShopId());
-        String shopImgAddr = ImageUtil.generateThumbnail(shopImgInputStream, fileName, dest);
+        String shopImgAddr = ImageUtil.generateThumbnail(thumbernail, dest);
         shop.setShopImg(shopImgAddr);
     }
 
@@ -98,19 +99,19 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public ShopExecution modifyShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException {
+    public ShopExecution modifyShop(Shop shop, ImageHolder thumbernail) throws ShopOperationException {
         if (shop == null || shop.getShopId() == null) {
             return new ShopExecution(ShopStateEnum.NULL_SHOP);
         } else {
             try {
                 // 1st Step:
                 // whether it is needed to deal with pictures
-                if (shopImgInputStream != null && fileName != null && !"".equals(fileName)) {
+                if (thumbernail.getImage() != null && thumbernail.getImageName() != null && !"".equals(thumbernail.getImageName())) {
                     Shop tempShop = shopDao.queryByShopId(shop.getShopId());
                     if (tempShop.getShopImg() != null) {
                         ImageUtil.deleteFileOrPath(tempShop.getShopImg());
                     }
-                    addShopImg(shop, shopImgInputStream, fileName);
+                    addShopImg(shop, thumbernail);
                 }
                 // 2nd Step:
                 // update shop's information

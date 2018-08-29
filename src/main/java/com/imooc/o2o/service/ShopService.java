@@ -1,5 +1,6 @@
 package com.imooc.o2o.service;
 
+import com.imooc.o2o.dto.ImageHolder;
 import com.imooc.o2o.dto.ShopExecution;
 import com.imooc.o2o.entity.Shop;
 import com.imooc.o2o.exceptions.ShopOperationException;
@@ -27,22 +28,20 @@ public interface ShopService {
     /**
      * modify shop's information
      * @param shop
-     * @param shopImgInputStream
-     * @param fileName
+     * @param thumbernail
      * @return
      * @throws ShopOperationException
      */
-    ShopExecution modifyShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
+    ShopExecution modifyShop(Shop shop, ImageHolder thumbernail) throws ShopOperationException;
 
     /**
      * register a new shop, including picture processing
      * @param shop
-     * @param shopImgInputStream
-     * @param fileName
+     * @param thumbernail
      * @return
      * @throws ShopOperationException
      */
-    ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
+    ShopExecution addShop(Shop shop, ImageHolder thumbernail) throws ShopOperationException;
 
 
 }

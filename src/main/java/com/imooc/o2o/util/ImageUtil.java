@@ -1,5 +1,6 @@
 package com.imooc.o2o.util;
 
+import com.imooc.o2o.dto.ImageHolder;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
 import org.slf4j.Logger;
@@ -44,13 +45,13 @@ public class ImageUtil {
 
     /**
      * deal with thumbnails and return relative address of created picture
-     * @param thumbnailInputStream
+     * @param thumbnail
      * @param targetAddr
      * @return
      */
-    public static String generateThumbnail(InputStream thumbnailInputStream,String fileName, String targetAddr) throws RuntimeException{
+    public static String generateThumbnail(ImageHolder thumbnail, String targetAddr) throws RuntimeException{
         String realFileName = getRandomFileName();
-        String extension = getFileExtension(fileName);
+        String extension = getFileExtension(thumbnail.getImageName());
         makeDirPath(targetAddr);
         String relativeAddr = targetAddr + realFileName + extension;
         logger.debug("current relativeAddr is: "+relativeAddr);
@@ -58,7 +59,7 @@ public class ImageUtil {
         logger.debug("current complete addr is: "+ PathUtil.getImgBasePath() + relativeAddr);
         try {
             Thumbnails
-                    .of(thumbnailInputStream)
+                    .of(thumbnail.getImage())
                     .size(200, 200)
                     .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/watermark.jpg")),0.25f)
                     .outputQuality(0.8f)
@@ -135,5 +136,38 @@ public class ImageUtil {
             }
             fileOrPath.delete();
         }
+    }
+
+    /**
+     * deal with images, and return new image's relative path
+     *
+     * @param thumbnail
+     * @param targetAddr
+     * @return
+     */
+    public static String generateNormalImg(ImageHolder thumbnail, String targetAddr) {
+        // get a unique name
+        String realFileName = getRandomFileName();
+        // get the extension of the file name, like png, jpg
+        String extension = getFileExtension(thumbnail.getImageName());
+        // if the directory doesn't exist, create it automatically
+        makeDirPath(targetAddr);
+        // get the relative path of the file including the extension name
+        String relativeAddr = targetAddr + realFileName + extension;
+        logger.debug("current relativeAddr is :" + relativeAddr);
+        // get the target path to which the file save
+        File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
+        logger.debug("current complete addr is :" + PathUtil.getImgBasePath() + relativeAddr);
+        // generate images with thumbnail
+        try {
+            Thumbnails.of(thumbnail.getImage()).size(337, 640)
+                    .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/watermark.jpg")), 0.25f)
+                    .outputQuality(0.9f).toFile(dest);
+        } catch (IOException e) {
+            logger.error(e.toString());
+            throw new RuntimeException("Thumbnail creation fails：" + e.toString());
+        }
+        // return the image's relative path
+        return relativeAddr;
     }
 }
