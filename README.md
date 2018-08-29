@@ -4,7 +4,7 @@ This platform allows merchants to run their business online. They can set up a s
 ## Screenshots
 **(more screenshots comming soon)**
 
-<img src="https://github.com/mountalps/illustration/blob/master/shop-2.jpg" width="1000">
+<img src="https://github.com/mountalps/illustration/blob/master/illu1.jpg" width="1000">
 
 
 ## Built with
