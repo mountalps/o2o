@@ -25,7 +25,7 @@ public interface ProductCategoryDao {
      * to delete a specific product category
      * @param productCategoryId
      * @param shopId
-     * @return
+     * @return effectNum
      */
     int deleteProductCategory(@Param("productCategoryId") long productCategoryId, @Param("shopId") long shopId);
 }
