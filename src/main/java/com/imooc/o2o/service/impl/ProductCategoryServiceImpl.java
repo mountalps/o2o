@@ -42,4 +42,20 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
             return new ProductCategoryExecution(ProductCategoryStateEnum.EMPTY_LIST);
         }
     }
+
+    @Override
+    @Transactional//if first step succeeds, it will commit only if the second step succeeds.
+    public ProductCategoryExecution deleteProductCategory(long productCategoryId, long shopId) throws ProductCategoryOperationException {
+        //TO DO: set the category id of the products with this category's id to null
+        try {
+            int effectedNum = productCategoryDao.deleteProductCategory(productCategoryId, shopId);
+            if (effectedNum <= 0){
+                throw new ProductCategoryOperationException("product category deletion fails");
+            }else {
+                return new ProductCategoryExecution(ProductCategoryStateEnum.SUCCESS);
+            }
+        }catch (Exception e){
+            throw new ProductCategoryOperationException("deleteProductCategory Error: " + e.getMessage());
+        }
+    }
 }
