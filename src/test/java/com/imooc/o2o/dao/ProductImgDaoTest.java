@@ -21,7 +21,7 @@ public class ProductImgDaoTest extends BaseTest {
 
     @Test
     public void testABatchInsertProductImg() throws Exception {
-        // productId为1的商品里添加两个详情图片记录
+        // add two pictures to product whose id = 1
         ProductImg productImg1 = new ProductImg();
         productImg1.setImgAddr("图片1");
         productImg1.setImgDesc("测试图片1");
