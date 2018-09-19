@@ -23,13 +23,13 @@ public class ProductImgDaoTest extends BaseTest {
     public void testABatchInsertProductImg() throws Exception {
         // add two pictures to product whose id = 1
         ProductImg productImg1 = new ProductImg();
-        productImg1.setImgAddr("图片1");
-        productImg1.setImgDesc("测试图片1");
+        productImg1.setImgAddr("picture1");
+        productImg1.setImgDesc("test picture 1");
         productImg1.setPriority(1);
         productImg1.setCreateTime(new Date());
         productImg1.setProductId(1L);
         ProductImg productImg2 = new ProductImg();
-        productImg2.setImgAddr("图片2");
+        productImg2.setImgAddr("picture 2");
         productImg2.setPriority(1);
         productImg2.setCreateTime(new Date());
         productImg2.setProductId(1L);
@@ -42,14 +42,14 @@ public class ProductImgDaoTest extends BaseTest {
 
     @Test
     public void testBQueryProductImgList() {
-        // 检查productId为1的商品是否有且仅有两张商品详情图片
+        // check whether there is only 2 pictures in product whose product id = 1
         List<ProductImg> productImgList = productImgDao.queryProductImgList(1L);
         assertEquals(2, productImgList.size());
     }
 
     @Test
     public void testCDeleteProductImgByProductId() throws Exception {
-        // 删除新增的两条商品详情图片记录
+        // delete the two test pictures
         long productId = 1;
         int effectedNum = productImgDao.deleteProductImgByProductId(productId);
         assertEquals(2, effectedNum);
